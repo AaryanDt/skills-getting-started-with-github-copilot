@@ -217,3 +217,25 @@ footer {
   font-size: 14px;
   opacity: 0.9;
 }
+
+#language-selector {
+  position: fixed;
+  top: 10px;
+  right: 20px;
+  z-index: 1001;
+}
+
+#language-selector select {
+  padding: 5px 10px;
+  border-radius: 15px;
+  border: 1px solid white;
+  background: transparent;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+#language-selector select option {
+  background: #1a237e;
+  color: white;
+}
