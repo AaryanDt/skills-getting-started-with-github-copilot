@@ -85,6 +85,27 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Initialize app
+  // Add timer functionality
+  function startTimer(duration) {
+    const timerDisplay = document.getElementById('timer-value');
+    let timer = duration;
+    
+    const countdown = setInterval(() => {
+      const minutes = parseInt(timer / 60, 10);
+      const seconds = parseInt(timer % 60, 10);
+
+      timerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+      if (--timer < 0) {
+        clearInterval(countdown);
+        fetchActivities();
+        startTimer(duration); // Restart timer
+      }
+    }, 1000);
+  }
+
+  // Initialize app with timer
   fetchActivities();
+  startTimer(1 * 60); // 1 minute
+
 });
