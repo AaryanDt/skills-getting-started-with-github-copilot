@@ -9,26 +9,66 @@ body {
   font-family: Arial, sans-serif;
   line-height: 1.6;
   color: #333;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
+  margin: 0;
+  padding: 0;
   background-color: #f5f5f5;
+  padding-top: 190px; /* Adjusted to accommodate new spacing */
 }
 
 header {
-  text-align: center;
-  padding: 20px 0;
-  margin-bottom: 30px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
   background-color: #1a237e;
+  height: 100px; /* Set fixed height */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Vertical centering */
+  text-align: center;
   color: white;
-  border-radius: 5px;
+  margin-bottom: 0;
+}
+
+header h1, header h2 {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+  max-width: none;
+  color: inherit;
 }
 
 header h1 {
-  margin-bottom: 10px;
+  margin-bottom: 8px; /* Adjust spacing between h1 and h2 */
+  font-size: 2em;
+  line-height: 1.2;
+}
+
+header h2 {
+  font-size: 1.5em;
+  font-weight: normal;
+  line-height: 1.2;
+}
+
+#timer-container {
+  position: fixed;
+  top: 110px;  /* Adjusted position */
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: #f5f5f5;
+  padding: 15px 0;  /* Increased padding */
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
   display: flex;
   flex-wrap: wrap;
   gap: 30px;
@@ -72,6 +112,17 @@ section h3 {
 
 .activity-card p {
   margin-bottom: 8px;
+}
+
+.participants-list {
+  margin-top: 10px;
+  list-style-position: inside;
+}
+
+.participants-list li {
+  color: #555;
+  font-size: 0.9em;
+  margin-bottom: 4px;
 }
 
 .form-group {
@@ -141,4 +192,50 @@ footer {
   margin-top: 30px;
   padding: 20px;
   color: #666;
+}
+
+#timer {
+  background-color: #1a237e;
+  color: white;
+  padding: 15px 30px;
+  border-radius: 50px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 0 20px;
+}
+
+#timer-value {
+  font-size: 24px;
+  font-weight: bold;
+  font-family: 'Courier New', monospace;
+}
+
+#timer p {
+  margin: 5px 0 0;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+#language-selector {
+  position: fixed;
+  top: 10px;
+  right: 20px;
+  z-index: 1001;
+}
+
+#language-selector select {
+  padding: 5px 10px;
+  border-radius: 15px;
+  border: 1px solid white;
+  background: transparent;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+#language-selector select option {
+  background: #1a237e;
+  color: white;
 }

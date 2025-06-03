@@ -1,4 +1,51 @@
+import en from './i18n/en.js';
+import es from './i18n/es.js';
+import hi from './i18n/hi.js';
+import mr from './i18n/mr.js';
+
+const translations = { en, es, hi, mr };
+let currentLang = 'en';
+
+function updateTexts() {
+  // Update static texts
+  document.querySelectorAll('[data-i18n]').forEach(element => {
+    const keys = element.getAttribute('data-i18n').split('.');
+    let value = translations[currentLang];
+    keys.forEach(key => {
+      value = value[key];
+    });
+    element.textContent = value;
+  });
+
+  // Update placeholders
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+    const keys = element.getAttribute('data-i18n-placeholder').split('.');
+    let value = translations[currentLang];
+    keys.forEach(key => {
+      value = value[key];
+    });
+    element.placeholder = value;
+  });
+
+  // Update dynamic content if exists
+  updateDynamicContent();
+}
+
+function updateDynamicContent() {
+  const activitiesList = document.getElementById("activities-list");
+  if (activitiesList.children.length > 0 && !activitiesList.querySelector('[data-i18n="loading"]')) {
+    fetchActivities(); // Refresh activities with new language
+  }
+}
+
+document.getElementById('lang').addEventListener('change', (e) => {
+  currentLang = e.target.value;
+  updateTexts();
+});
+
 document.addEventListener("DOMContentLoaded", () => {
+  updateTexts();
+
   const activitiesList = document.getElementById("activities-list");
   const activitySelect = document.getElementById("activity");
   const signupForm = document.getElementById("signup-form");
@@ -23,8 +70,12 @@ document.addEventListener("DOMContentLoaded", () => {
         activityCard.innerHTML = `
           <h4>${name}</h4>
           <p>${details.description}</p>
-          <p><strong>Schedule:</strong> ${details.schedule}</p>
-          <p><strong>Availability:</strong> ${spotsLeft} spots left</p>
+          <p><strong>${translations[currentLang].activity.schedule}</strong> ${details.schedule}</p>
+          <p><strong>${translations[currentLang].activity.availability}</strong> ${spotsLeft} ${translations[currentLang].activity.spotsLeft}</p>
+          <p><strong>${translations[currentLang].activity.participants}</strong></p>
+          <ul class="participants-list">
+            ${details.participants.map(email => `<li>${email}</li>`).join('')}
+          </ul>
         `;
 
         activitiesList.appendChild(activityCard);
@@ -81,6 +132,27 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Initialize app
+  // Add timer functionality
+  function startTimer(duration) {
+    const timerDisplay = document.getElementById('timer-value');
+    let timer = duration;
+    
+    const countdown = setInterval(() => {
+      const minutes = parseInt(timer / 60, 10);
+      const seconds = parseInt(timer % 60, 10);
+
+      timerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+      if (--timer < 0) {
+        clearInterval(countdown);
+        fetchActivities();
+        startTimer(duration); // Restart timer
+      }
+    }, 1000);
+  }
+
+  // Initialize app with timer
   fetchActivities();
+  startTimer(1 * 60); // 1 minute
+
 });
